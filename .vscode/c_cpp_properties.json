@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "ARM",
+            "includePath": [
+                "${workspace}/Core/Inc",
+                "${workspace}/Drivers/STM32F1xx_HAL_Driver/Inc",
+                "${workspace}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "${workspace}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "${workspace}/Drivers/CMSIS/Include",
+                "${workspace}/MultiButton",
+                "${workspace}/log"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F103xE"
+            ],
+            "cStandard": "gnu99",
+            "intelliSenseMode": "clang-arm"
+        }
+    ],
+    "version": 4
+}

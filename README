@@ -1,1 +1,1 @@
-为keil项目添加vscode配置。
+读取当前目录下的MDK-ARM文件夹中后缀为.uvprojx的文件内容，在.vscode文件夹下生成c_cpp_properties.json文件。

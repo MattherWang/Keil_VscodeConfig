@@ -4,9 +4,21 @@ import xml.etree.ElementTree as ET
 
 # 获取当前工作目录
 current_directory = os.getcwd()
+# print(current_directory)
 directory_name = os.path.basename(current_directory)
-print(directory_name)
-file_name = 'MDK-ARM/' + directory_name + '.uvprojx'
+# print(directory_name)
+
+# 搜索 .uvprojx 文件
+search_path = os.path.join(current_directory, 'MDK-ARM')
+# print(search_path)
+for root, dirs, files in os.walk(search_path):
+    for file in files:
+        if file.endswith('.uvprojx'):
+            file_name = os.path.join(root, file)
+            # print(file_name)
+            break
+
+# print(file_name)
 
 
 # 解析 XML 文件
@@ -33,18 +45,19 @@ includes_list = includes.split(';')
 dict_path = {}
 configurations = []
 configurations_dict = {}
+
 configurations_dict['name'] = 'ARM'
-configurations_dict['compilerPath'] = 'C:/Keil_v5/ARM/ARMCC/bin/armcc'
 
+# 添加头文件路径
 configurations_dict['includePath'] = includes_list
-configurations_dict['includePath'].append("C:/Keil_v5/ARM/ARMCC/include")
-configurations_dict['includePath'].append("C:/Keil_v5/ARM/ARMCC/include/rw")
 
-configurations_dict['defines'] = defines_list
-configurations_dict['defines'].append("__ARMCC_VERSION")
+# 添加宏定义
+configurations_dict['defines'] = defines_list                                           # 添加宏定义                             
 
+# 添加C标准
 configurations_dict['cStandard'] = 'gnu99'
 
+# 添加intellisense模式
 configurations_dict['intelliSenseMode'] = 'clang-arm'
 
 configurations.append(configurations_dict)
@@ -61,4 +74,17 @@ os.makedirs(os.path.dirname(json_file_path), exist_ok=True)  # 确保 .vscode �
 with open(json_file_path, 'w') as json_file:
     json.dump(dict_path, json_file, indent=4)
 
-print('Configuration Done!')
+print('Generate c_cpp_properties.json successfully!')
+
+# 生成 settings.json 文件
+settings_dict = {}
+settings_dict['editor.tabSize'] = 2
+
+# 写入 settings.json 文件
+settings_file_path = os.path.join(new_directory,'settings.json')
+os.makedirs(os.path.dirname(settings_file_path), exist_ok=True)  # 确保 .vscode 目录存在
+with open(settings_file_path, 'w') as settings_file:
+    json.dump(settings_dict, settings_file, indent=4)
+
+print('Generate settings.json successfully!')
+    
